@@ -1,0 +1,24 @@
+{
+    "name": "hjerichen/php-mock-prophecy-trait",
+    "description": "A Trait for php unit test cases to activate php-mock-prophecy from Markus Malkusch. Enables auto completion as well.",
+    "type": "testing",
+    "authors": [
+        {
+            "name": "Heiko Jerichen",
+            "email": "heiko@jerichen.de"
+        }
+    ],
+    "require": {
+        "php": ">=7.1.0",
+        "php-mock/php-mock-prophecy": "^0.0.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "HJerichen\\PhpMockProphecyTrait\\": "src/"
+        }
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-master",
+        "phpunit/phpunit": "^8.0"
+    }
+}
