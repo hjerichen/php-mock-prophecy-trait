@@ -46,6 +46,4 @@ trait ProphesizePHP
         }
         return $this->phpProphet;
     }
-
-
 }
