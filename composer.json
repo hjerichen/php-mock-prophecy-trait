@@ -9,7 +9,7 @@
         }
     ],
     "require": {
-        "php": ">=7.1.0",
+        "php": ">=7.1",
         "php-mock/php-mock-prophecy": "^0.0.2"
     },
     "autoload": {
