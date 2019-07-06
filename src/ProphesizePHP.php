@@ -1,9 +1,17 @@
 <?php
+/** @noinspection PhpUnhandledExceptionInspection */
+/** @noinspection PhpDocMissingThrowsInspection */
+
 
 namespace HJerichen\PhpMockProphecyTrait;
 
 use phpmock\prophecy\PHPProphet;
+use PHPUnit\Framework\TestCase;
 use Prophecy\Prophecy\ProphecyInterface;
+use Prophecy\Prophet;
+use ReflectionException;
+use ReflectionMethod;
+use ReflectionProperty;
 
 trait ProphesizePHP
 {
@@ -11,21 +19,6 @@ trait ProphesizePHP
      * @var PHPProphet
      */
     private $phpProphet;
-
-    /**
-     * @throws \Throwable
-     */
-    public function runBare(): void
-    {
-        /** @noinspection PhpUndefinedClassInspection */
-        parent::runBare();
-
-        if ($this->phpProphet !== null) {
-            $this->phpProphet->checkPredictions();
-        }
-        $this->phpProphet = null;
-    }
-
 
     /**
      * @param string $namespace
@@ -43,7 +36,30 @@ trait ProphesizePHP
     {
         if ($this->phpProphet === null) {
             $this->phpProphet = new PHPProphet();
+            $this->setProphetFromTestCase();
         }
         return $this->phpProphet;
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    private function setProphetFromTestCase(): void
+    {
+        $prophet = $this->getProphetFromTestCase();
+        $reflectionAttribute = new ReflectionProperty(PHPProphet::class, 'prophet');
+        $reflectionAttribute->setAccessible(true);
+        $reflectionAttribute->setValue($this->phpProphet, $prophet);
+    }
+
+    /**
+     * @return Prophet
+     * @throws ReflectionException
+     */
+    private function getProphetFromTestCase(): Prophet
+    {
+        $refectionMethod = new ReflectionMethod(TestCase::class, 'getProphet');
+        $refectionMethod->setAccessible(true);
+        return $refectionMethod->invoke($this);
     }
 }

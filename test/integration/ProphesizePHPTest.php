@@ -52,4 +52,13 @@ class ProphesizePHPTest extends TestCase
         file_put_contents($filename, 'test');
         $this->assertFalse(is_file($filename));
     }
+
+    /**
+     *
+     */
+    public function testShouldNotBeCalledCountsAsPHPUnitAssertion(): void
+    {
+        $this->php->time()->shouldNotBeCalled();
+        $this->php->reveal();
+    }
 }
