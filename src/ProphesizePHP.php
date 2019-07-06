@@ -12,7 +12,13 @@ use Prophecy\Prophet;
 use ReflectionException;
 use ReflectionMethod;
 use ReflectionProperty;
+use Throwable;
 
+/**
+ * Trait ProphesizePHP
+ * @package HJerichen\PhpMockProphecyTrait
+ * @author Heiko Jerichen <h.jerichen@nordwest.com>
+ */
 trait ProphesizePHP
 {
     /**
@@ -47,9 +53,9 @@ trait ProphesizePHP
     private function setProphetFromTestCase(): void
     {
         $prophet = $this->getProphetFromTestCase();
-        $reflectionAttribute = new ReflectionProperty(PHPProphet::class, 'prophet');
-        $reflectionAttribute->setAccessible(true);
-        $reflectionAttribute->setValue($this->phpProphet, $prophet);
+        $reflectionProperty = new ReflectionProperty(PHPProphet::class, 'prophet');
+        $reflectionProperty->setAccessible(true);
+        $reflectionProperty->setValue($this->phpProphet, $prophet);
     }
 
     /**
@@ -61,5 +67,18 @@ trait ProphesizePHP
         $refectionMethod = new ReflectionMethod(TestCase::class, 'getProphet');
         $refectionMethod->setAccessible(true);
         return $refectionMethod->invoke($this);
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function runBare(): void
+    {
+        parent::runBare();
+
+        if ($this->phpProphet !== null) {
+            $this->phpProphet->checkPredictions();
+        }
+        $this->phpProphet = null;
     }
 }

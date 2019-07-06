@@ -8,8 +8,8 @@ use Prophecy\Prophecy\MethodProphecy;
 use Prophecy\Prophecy\ProphecyInterface;
 
 /**
- *
- * @package
+ * Interface FunctionProphecy
+ * @package HJerichen\PhpMockProphecyTrait
  * @author Heiko Jerichen <h.jerichen@nordwest.com>
  */
 interface FunctionProphecy extends ProphecyInterface

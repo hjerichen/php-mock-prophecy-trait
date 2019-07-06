@@ -6,6 +6,11 @@ namespace HJerichen\PhpMockProphecyTrait;
 use phpmock\prophecy\PHPProphet;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Class ProphesizePHPTest
+ * @package HJerichen\PhpMockProphecyTrait
+ * @author Heiko Jerichen <h.jerichen@nordwest.com>
+ */
 class ProphesizePHPTest extends TestCase
 {
     use ProphesizePHP;
@@ -60,5 +65,16 @@ class ProphesizePHPTest extends TestCase
     {
         $this->php->time()->shouldNotBeCalled();
         $this->php->reveal();
+    }
+
+    /**
+     *
+     */
+    public function testUsageInSecondTest(): void
+    {
+        $this->php->time()->willReturn(123);
+        $this->php->reveal();
+
+        $this->assertEquals(123, time());
     }
 }
